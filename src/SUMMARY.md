@@ -6,3 +6,4 @@
 - [Overview](./overview.md)
 - [Architecture](./architecture.md)
 - [Docker client](./client.md)
+- [Build out first image](./build.md)
