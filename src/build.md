@@ -1,4 +1,4 @@
-# Build out first image
+# Build our first image
 
 In this chapter, we will start building our first image and familisiarize. The completed example is accessible [here](https://github.com/dockerforfriends/webinar-material/blob/main/chapter-4/Dockerfile)
 
