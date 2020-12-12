@@ -187,7 +187,7 @@ INSTRUCTION arguments
 <p>Following we will, update the ubuntu package manager in order to install the <code>ping</code> command.</p>
 <p>This is done with the <code>RUN &lt;command&gt;</code> syntact in the our Dockerfile.</p>
 <pre><code>RUN apt-get update
-RUN apt-get install ping -y
+RUN apt-get install iputils-ping -y
 </code></pre>
 <blockquote>
 <p>Pay attention to the <code>-y</code> param. Usually, installing software using package manager will prompt user for <code>Y/n</code> but there is no interaction during build of image, so commands should skip the prompt.</p>
