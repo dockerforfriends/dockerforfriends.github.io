@@ -97,7 +97,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="dff.html">Docker for friends</a></li><li class="chapter-item expanded affix "><a href="installation.html">Installation</a></li><li class="chapter-item expanded "><a href="overview.html"><strong aria-hidden="true">1.</strong> Overview</a></li><li class="chapter-item expanded "><a href="architecture.html"><strong aria-hidden="true">2.</strong> Architecture</a></li><li class="chapter-item expanded "><a href="client.html"><strong aria-hidden="true">3.</strong> Docker client</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="dff.html">Docker for friends</a></li><li class="chapter-item expanded affix "><a href="installation.html">Installation</a></li><li class="chapter-item expanded "><a href="overview.html"><strong aria-hidden="true">1.</strong> Overview</a></li><li class="chapter-item expanded "><a href="architecture.html"><strong aria-hidden="true">2.</strong> Architecture</a></li><li class="chapter-item expanded "><a href="client.html"><strong aria-hidden="true">3.</strong> Docker client</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">4.</strong> Build out first image</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -276,6 +276,35 @@ hello-world                  latest                            bf756fb1ae65     
 <li>The option <code>-it</code> will make it available to have an interactive pseudo-TTY with the container.</li>
 <li>The <code>bash</code> would be the application that will be executed in the container and this would allow us to look around inside.</li>
 </ul>
+<h1><a class="header" href="#build-out-first-image" id="build-out-first-image">Build out first image</a></h1>
+<p>In this chapter, we will start building our first image and familisiarize. The completed example is accessible <a href="https://github.com/dockerforfriends/webinar-material/blob/main/chapter-4/Dockerfile">here</a></p>
+<h2><a class="header" href="#dockerfile" id="dockerfile">Dockerfile</a></h2>
+<p>A <code>Dockerfile</code> is a text document that contains all the commands a user could call on the command line to assemble an image. When we tell Docker to build our image by executing the <code>docker build</code> command, Docker reads these instructions and executes them one by one and creates a Docker image as a result.</p>
+<blockquote>
+<p>The name of the Dockerfile is not important but the default filename for many commands is simply <code>Dockerfile</code>. So, we’ll use that as our filename throughout this series.</p>
+</blockquote>
+<p>Here is the format of the Dockerfile:</p>
+<pre><code># Comment
+INSTRUCTION arguments
+</code></pre>
+<p>The instruction is not case-sensitive. However, convention is for them to be UPPERCASE to distinguish them from arguments more easily.</p>
+<h2><a class="header" href="#base-image" id="base-image">Base image</a></h2>
+<p>Create a directory and create a file named <code>Dockerfile</code> and open this file in your text editor.</p>
+<p>The first thing we need to do is to add a line in our <code>Dockerfile</code> that tells Docker what base image we would like to use for our application. Therefore, instead of creating our own base image, we’ll use the official <code>ubuntu</code> image.</p>
+<pre><code>FROM ubuntu
+</code></pre>
+<p>The above is equivalent to </p>
+<pre><code>FROM ubuntu:latest
+</code></pre>
+<h2><a class="header" href="#extending-the-base-image-ubuntu" id="extending-the-base-image-ubuntu">Extending the base image ubuntu</a></h2>
+<p>Following we will, update the ubuntu package manager in order to install the <code>ping</code> command.</p>
+<p>This is done with the <code>RUN &lt;command&gt;</code> syntact in the our Dockerfile.</p>
+<pre><code>RUN apt-get update
+RUN apt-get install ping -y
+</code></pre>
+<blockquote>
+<p>Pay attention to the <code>-y</code> param. Usually, installing software using package manager will prompt user for <code>Y/n</code> but there is no interaction during build of image, so commands should skip the prompt.</p>
+</blockquote>
 
                     </main>
 

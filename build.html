@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Architecture - Docker for friends</title>
+        <title>Build out first image - Docker for friends</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="dff.html">Docker for friends</a></li><li class="chapter-item expanded affix "><a href="installation.html">Installation</a></li><li class="chapter-item expanded "><a href="overview.html"><strong aria-hidden="true">1.</strong> Overview</a></li><li class="chapter-item expanded "><a href="architecture.html" class="active"><strong aria-hidden="true">2.</strong> Architecture</a></li><li class="chapter-item expanded "><a href="client.html"><strong aria-hidden="true">3.</strong> Docker client</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">4.</strong> Build out first image</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="dff.html">Docker for friends</a></li><li class="chapter-item expanded affix "><a href="installation.html">Installation</a></li><li class="chapter-item expanded "><a href="overview.html"><strong aria-hidden="true">1.</strong> Overview</a></li><li class="chapter-item expanded "><a href="architecture.html"><strong aria-hidden="true">2.</strong> Architecture</a></li><li class="chapter-item expanded "><a href="client.html"><strong aria-hidden="true">3.</strong> Docker client</a></li><li class="chapter-item expanded "><a href="build.html" class="active"><strong aria-hidden="true">4.</strong> Build out first image</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -163,34 +163,46 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#architecture" id="architecture">Architecture</a></h1>
+                        <h1><a class="header" href="#build-out-first-image" id="build-out-first-image">Build out first image</a></h1>
+<p>In this chapter, we will start building our first image and familisiarize. The completed example is accessible <a href="https://github.com/dockerforfriends/webinar-material/blob/main/chapter-4/Dockerfile">here</a></p>
+<h2><a class="header" href="#dockerfile" id="dockerfile">Dockerfile</a></h2>
+<p>A <code>Dockerfile</code> is a text document that contains all the commands a user could call on the command line to assemble an image. When we tell Docker to build our image by executing the <code>docker build</code> command, Docker reads these instructions and executes them one by one and creates a Docker image as a result.</p>
 <blockquote>
-<p>Docker uses a client-server architecture. The Docker client talks to the Docker daemon, which does the heavy lifting of building, running, and distributing your Docker containers.</p>
+<p>The name of the Dockerfile is not important but the default filename for many commands is simply <code>Dockerfile</code>. So, we’ll use that as our filename throughout this series.</p>
 </blockquote>
-<h2><a class="header" href="#docker-daemon" id="docker-daemon">Docker daemon</a></h2>
-<p>The Docker daemon (<code>dockerd</code>) listens for Docker API requests from client and manages Docker objects such as images, containers, networks, and volumes. A daemon can also communicate with other daemons to manage Docker services.</p>
-<h2><a class="header" href="#docker-client" id="docker-client">Docker client</a></h2>
-<p>The Docker client (<code>docker</code>) is the primary way that many Docker users interact with Docker. When you use commands such as <code>docker run</code>, the client sends these commands to <code>dockerd</code>, which carries them out.</p>
-<p>The Docker client and daemon can run on the same system, or you can connect a Docker client to a remote Docker daemon. The Docker client and daemon communicate using a REST API, over UNIX sockets or a network interface. This make Docker client able communicate with more than one daemon.</p>
-<h2><a class="header" href="#docker-registries" id="docker-registries">Docker registries</a></h2>
-<p>A Docker registry stores Docker images. <a href="https://hub.docker.com">Docker Hub</a> is a <strong>public</strong> registry that anyone can use, and Docker is configured to look for images on Docker Hub by default. You can even run your own <strong>private</strong> registry.</p>
-<h2><a class="header" href="#diagram" id="diagram">Diagram</a></h2>
-<p><img src="assets/architecture.svg" alt="Docker architecture" /></p>
+<p>Here is the format of the Dockerfile:</p>
+<pre><code># Comment
+INSTRUCTION arguments
+</code></pre>
+<p>The instruction is not case-sensitive. However, convention is for them to be UPPERCASE to distinguish them from arguments more easily.</p>
+<h2><a class="header" href="#base-image" id="base-image">Base image</a></h2>
+<p>Create a directory and create a file named <code>Dockerfile</code> and open this file in your text editor.</p>
+<p>The first thing we need to do is to add a line in our <code>Dockerfile</code> that tells Docker what base image we would like to use for our application. Therefore, instead of creating our own base image, we’ll use the official <code>ubuntu</code> image.</p>
+<pre><code>FROM ubuntu
+</code></pre>
+<p>The above is equivalent to </p>
+<pre><code>FROM ubuntu:latest
+</code></pre>
+<h2><a class="header" href="#extending-the-base-image-ubuntu" id="extending-the-base-image-ubuntu">Extending the base image ubuntu</a></h2>
+<p>Following we will, update the ubuntu package manager in order to install the <code>ping</code> command.</p>
+<p>This is done with the <code>RUN &lt;command&gt;</code> syntact in the our Dockerfile.</p>
+<pre><code>RUN apt-get update
+RUN apt-get install ping -y
+</code></pre>
+<blockquote>
+<p>Pay attention to the <code>-y</code> param. Usually, installing software using package manager will prompt user for <code>Y/n</code> but there is no interaction during build of image, so commands should skip the prompt.</p>
+</blockquote>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="overview.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="client.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
-                        
-                            <a rel="next" href="client.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -200,15 +212,11 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="overview.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="client.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
-                
-                    <a rel="next" href="client.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
                 
             </nav>
 
