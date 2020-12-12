@@ -41,7 +41,7 @@ This is done with the `RUN <command>` syntact in the our Dockerfile.
 
 ```
 RUN apt-get update
-RUN apt-get install ping -y
+RUN apt-get install iputils-ping -y
 ```
 
 > Pay attention to the `-y` param. Usually, installing software using package manager will prompt user for `Y/n` but there is no interaction during build of image, so commands should skip the prompt.
