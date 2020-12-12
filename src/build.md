@@ -47,3 +47,29 @@ RUN apt-get install iputils-ping -y
 > Pay attention to the `-y` param. Usually, installing software using package manager will prompt user for `Y/n` but there is no interaction during build of image, so commands should skip the prompt.
 
 
+## Building
+
+Now that we’ve created our Dockerfile, let’s build our image. To do this, we use the `docker build` command.
+
+The docker build command builds Docker images from a Dockerfile and a “context”. A build’s context is the set of files located in the specified `PATH` or `URL`. The Docker build process can access any of the files located in the context. Issuing `docker build` will give an error `"docker build" requires exactly 1 argument.`. This argument is the context, for the Dockerfile it will use the default name `Dockerfile` found.
+
+Let's build using:
+
+```
+docker build .
+```
+
+## Tagging
+
+Using `docker images` we will notice the newly created image with only id, when other images have names.
+
+```
+<none> <none> 1790aa6011b4 'N minutes ago' 101MB
+```
+
+
+The build command optionally takes a `--tag` flag. The tag is used to set the name of the image and an optional tag in the format `‘name:tag’`. We’ll leave off the optional “tag” for now to help simplify things. If you do not pass a tag, Docker will use “latest” as its default tag. You’ll see this in the last line of the build output.
+
+```
+docker build --tag ubuntu-ping .
+```
